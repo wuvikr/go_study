@@ -2,12 +2,6 @@ package main
 
 import "fmt"
 
-func main() {
-	basic()
-
-	forO()
-}
-
 func basic() {
 	sum := 0
 	for i := 1; i <= 100; i++ {
@@ -28,6 +22,19 @@ func forO() {
 	}
 }
 
+/*
+在go中，for循环提供了一种更加简便的语法糖形式，for range
+*/
 func forRange() {
+	s := []int{1, 3, 5}
 
+	for index, value := range s {
+		fmt.Printf("index=%d value=%d\n", index, value)
+	}
+}
+
+func main() {
+	// basic()
+	// forO()
+	forRange()
 }

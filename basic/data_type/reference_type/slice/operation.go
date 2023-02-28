@@ -5,7 +5,7 @@ import "fmt"
 func sliceCap() {
 
 	var numbers []int
-	for i := 0; i < 10; i++ {
+	for i := 0; i <= 1025; i++ {
 		// 使用append函数向numbers切片中追加元素，注意append不支持数组，数组是不可变长度。
 		numbers = append(numbers, i)
 
@@ -46,7 +46,7 @@ func sliceDelete() {
 }
 
 func main() {
-	sliceAppend()
-	//sliceCap()
+	// sliceAppend()
+	sliceCap()
 	//sliceDelete()
 }
