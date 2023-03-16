@@ -1,1 +1,1 @@
-golang study code.
+hello golang...de.
