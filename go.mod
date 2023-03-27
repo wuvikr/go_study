@@ -1,4 +1,4 @@
-module github.com/wuvikr
+module github.com/wuvikr/go_study
 
 go 1.20
 
