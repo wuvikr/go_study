@@ -19,8 +19,10 @@ type user struct {
 
 // 定义一个初始化数据库的函数
 func initDB() (err error) {
+	// DSN: Data Source Name
 	dsn := "root:123456@tcp(10.249.213.185:3306)/go?charset=utf8mb4&parseTime=true"
 
+	// 给全局变量赋值，Open函数并不会校验账户密码是否正确
 	db, err = sql.Open("mysql", dsn)
 	if err != nil {
 		return err
@@ -92,10 +94,12 @@ func update() {
 	r, err := db.Exec(sqlStr, "刘六", "999999", 2)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
+		return
 	} else {
-		i, _ := r.RowsAffected()
-		fmt.Printf("i: %v\n", i)
+		i, _ := r.RowsAffected() // 操作影响的行数
+		fmt.Printf("update success, affected rows:%d\n", i)
 	}
+
 }
 
 func delete() {
