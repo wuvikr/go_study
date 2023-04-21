@@ -42,13 +42,24 @@ func insertData() {
 	ret, err := db.Exec(sqlStr, "王五", "223314")
 	if err != nil {
 		fmt.Printf("insert faild, err: %v\n", err)
+		return
 	}
 
-	id, err2 := ret.LastInsertId() // 新插入数据的id
+	// 新插入数据的id
+	lastInsertId, err := ret.LastInsertId()
 	if err != nil {
-		fmt.Printf("get lastinsertID failed,err2: %v\n", err2)
+		fmt.Printf("get lastinsertID failed,err2: %v\n", err)
+		return
 	}
-	fmt.Printf("insert success, the id is : %v\n", id)
+	fmt.Printf("insert success, the id is : %v\n", lastInsertId)
+
+	// 影响的行数
+	rowsAffected, err := ret.RowsAffected()
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		return
+	}
+	fmt.Println("Rows affected:", rowsAffected)
 }
 
 // 查询单行数据
@@ -95,13 +106,18 @@ func update() {
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
-	} else {
-		i, _ := r.RowsAffected() // 操作影响的行数
-		fmt.Printf("update success, affected rows:%d\n", i)
 	}
 
+	// 操作影响的行数
+	rowsAffected, err := r.RowsAffected()
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		return
+	}
+	fmt.Printf("update success, affected rows:%d\n", rowsAffected)
 }
 
+// 删除数据
 func delete() {
 	sqlStr := "delete from user_tbl where id = ?"
 	ret, err := db.Exec(sqlStr, 1)
@@ -109,12 +125,12 @@ func delete() {
 		fmt.Printf("delete sql exec failed! err: %v\n", err)
 		return
 	}
-	row, err2 := ret.RowsAffected()
-	if err2 != nil {
-		fmt.Printf("delete row failed, err2: %v\n", err2)
+	rowsAffected, err := ret.RowsAffected()
+	if err != nil {
+		fmt.Printf("delete row failed, err2: %v\n", err)
 		return
 	}
-	fmt.Printf("delete success, delete row: %d\n", row)
+	fmt.Printf("delete success, delete row: %d\n", rowsAffected)
 }
 
 func main() {
