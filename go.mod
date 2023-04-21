@@ -1,14 +1,18 @@
-module github.com/wuvikr/go_study
+module go_study
 
 go 1.20
 
 require (
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/jmoiron/sqlx v1.3.5
-	go.mongodb.org/mongo-driver v1.11.3
+	github.com/wuvikr/go_study v0.0.0-20230402061525-056b54466072
+	go.mongodb.org/mongo-driver v1.11.4
 )
 
 require (
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
