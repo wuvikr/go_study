@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql" // 空导入，注册mysql驱动对象
 )
@@ -18,21 +19,32 @@ type user struct {
 }
 
 // 定义一个初始化数据库的函数
-func initDB() (err error) {
-	// DSN: Data Source Name
-	dsn := "root:123456@tcp(10.249.213.185:3306)/go?charset=utf8mb4&parseTime=true"
+func initDB() (*sql.DB, error) {
+	// 数据库连接信息
+	user := "root"
+	password := "password"
+	host := "127.0.0.1"
+	port := "3306"
+	database := "test"
 
-	// 给全局变量赋值，Open函数并不会校验账户密码是否正确
-	db, err = sql.Open("mysql", dsn)
+	// 连接MySQL数据库
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, password, host, port, database))
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	// 尝试和数据库建立连接
-	if err = db.Ping(); err != nil {
-		return err
+	// 设置连接池配置
+	db.SetMaxOpenConns(100)            // 最大连接数
+	db.SetMaxIdleConns(10)             // 最大空闲连接数
+	db.SetConnMaxLifetime(time.Minute) // 连接最大生存时间
+
+	// 测试数据库连接是否正常
+	if err := db.Ping(); err != nil {
+		return nil, err
 	}
-	return nil
+
+	// 返回数据库连接对象
+	return db, nil
 }
 
 // 插入数据
